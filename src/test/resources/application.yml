@@ -1,0 +1,12 @@
+ms:
+  app:
+    id: e2076d1e-f717-4c1e-966f-a3f303074a25
+    scopes: User.Read,Files.Read.All
+    authority: https://login.microsoftonline.com/common/
+
+spring:
+  datasource:
+    url: jdbc:h2:file:./db-test;;
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
