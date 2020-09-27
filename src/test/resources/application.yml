@@ -4,6 +4,10 @@ ms:
     scopes: User.Read,Files.Read.All
     authority: https://login.microsoftonline.com/common/
 
+logging:
+  level:
+    me.avo.yunyin: TRACE
+
 spring:
   datasource:
     url: jdbc:h2:file:./db-test;;

@@ -29,7 +29,13 @@ internal class SynchronizationServiceTest(
     }
 
     class DataProviderMock(private val tracks: Collection<TrackStaging>) : DataProvider {
-        override fun fetch(libraryId: String) = tracks
+        private var isFirstCall = true
+        override fun hasNext(): Boolean = !isFirstCall
+
+        override fun next(): Collection<TrackStaging> {
+            isFirstCall = false
+            return tracks
+        }
     }
 
     @Test fun test() {
