@@ -16,9 +16,9 @@ class Track {
     @Column(nullable = false)
     var title: String? = null
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     var artist: String? = null
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     var album: String? = null
 }

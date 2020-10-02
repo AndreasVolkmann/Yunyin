@@ -1,16 +1,18 @@
 package me.avo.yunyin.service.provider
 
 import me.avo.yunyin.entity.DataSource
-import me.avo.yunyin.entity.DataSourceType
+import me.avo.yunyin.enum.DataSourceType
 import me.avo.yunyin.service.provider.onedrive.OneDriveGraph
 import me.avo.yunyin.service.provider.onedrive.OneDriveAuthProvider
 import me.avo.yunyin.service.provider.onedrive.OneDriveDataProvider
+import me.avo.yunyin.service.provider.onedrive.OneDriveSteamProvider
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 
 @Service
 class ProviderFactoryImpl(
     private val oneDriveAuthProvider: OneDriveAuthProvider
-) : AuthProviderFactory, DataProviderFactory {
+) : AuthProviderFactory, DataProviderFactory, StreamProviderFactory {
 
     override fun getAuthProvider(dataSourceType: DataSourceType): AuthProvider {
         return when (dataSourceType) {
@@ -25,6 +27,14 @@ class ProviderFactoryImpl(
             DataSourceType.OneDrive -> OneDriveDataProvider(
                 OneDriveGraph(oneDriveAuthProvider),
                 dataSource
+            )
+        }
+    }
+
+    override fun getStreamProvider(dataSourceType: DataSourceType): StreamProvider {
+        return when (dataSourceType) {
+            DataSourceType.OneDrive -> OneDriveSteamProvider(
+                OneDriveGraph(oneDriveAuthProvider)
             )
         }
     }

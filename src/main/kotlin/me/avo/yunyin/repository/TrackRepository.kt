@@ -12,8 +12,8 @@ interface TrackRepository : JpaRepository<Track, Long> {
     @Modifying
     @Query(
         value = """
-            insert into tracks(item_Id, title, artist, album) 
-            select item_Id, title, artist, album
+            insert into tracks(id, item_Id, title, artist, album) 
+            select id, item_Id, title, artist, album
               from track_staging
         """,
         nativeQuery = true

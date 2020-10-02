@@ -21,6 +21,13 @@ class OneDriveGraph(
             .get()
     }
 
+    fun getStream(id: String): InputStream = tryGet {
+        graphClient
+            .customRequest("/me/drive/items/${id}/content", InputStream::class.java)
+            .buildRequest()
+            .get()
+    }
+
     private fun getRoot(): IDriveItemCollectionPage = tryGet {
         graphClient
             .me().drive().root().children()

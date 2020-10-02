@@ -40,7 +40,10 @@ class SynchronizationService(
             val dataProvider = dataProviderFactory.getDataProvider(dataSource)
             dataProvider.forEach { tracks ->
                 logger.info("Found ${tracks.size} tracks")
-                trackStagingRepository.saveAll(tracks)
+                if (tracks.isNotEmpty()) {
+                    trackStagingRepository.saveAll(tracks)
+                    trackStagingRepository.flush()
+                }
             }
         }
         else {

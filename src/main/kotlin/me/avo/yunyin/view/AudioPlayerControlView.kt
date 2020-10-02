@@ -13,14 +13,14 @@ class AudioPlayerControlView : View() {
 
         button("Previous") {
             enableWhen(audioController::hasPrevious)
-            action(audioController::previous)
+            //action(audioController::previous)
         }
         button("Play") {
             action {  }
         }
         button("Next") {
             enableWhen(audioController::hasNext)
-            action(audioController::next)
+            //action(audioController::next)
         }
     }
 }

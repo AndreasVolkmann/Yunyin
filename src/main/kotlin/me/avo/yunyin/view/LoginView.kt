@@ -3,7 +3,7 @@ package me.avo.yunyin.view
 import javafx.application.Platform
 import javafx.scene.text.Font
 import me.avo.yunyin.controller.LoginController
-import me.avo.yunyin.entity.DataSourceType
+import me.avo.yunyin.enum.DataSourceType
 import tornadofx.*
 
 class LoginView : View("Login") {

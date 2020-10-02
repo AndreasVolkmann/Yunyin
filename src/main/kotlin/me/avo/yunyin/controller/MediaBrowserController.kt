@@ -1,8 +1,10 @@
 package me.avo.yunyin.controller
 
+import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import me.avo.yunyin.entity.Track
+import me.avo.yunyin.model.FileItem
 import me.avo.yunyin.repository.TrackRepository
 import me.avo.yunyin.service.SynchronizationService
 import org.springframework.stereotype.Component
@@ -19,7 +21,7 @@ class MediaBrowserController(
 
     fun init() {
         runAsync {
-            synchronizationService.synchronize()
+            //synchronizationService.synchronize()
 
         } success {
             refresh()

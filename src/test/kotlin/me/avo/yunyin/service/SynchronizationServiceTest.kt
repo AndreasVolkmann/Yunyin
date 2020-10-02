@@ -1,6 +1,9 @@
 package me.avo.yunyin.service
 
-import me.avo.yunyin.entity.*
+import me.avo.yunyin.entity.DataSource
+import me.avo.yunyin.entity.DataSourceKey
+import me.avo.yunyin.entity.TrackStaging
+import me.avo.yunyin.enum.DataSourceType
 import me.avo.yunyin.repository.ArtistRepository
 import me.avo.yunyin.repository.TrackRepository
 import me.avo.yunyin.repository.TrackStagingRepository
@@ -11,12 +14,14 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.transaction.annotation.Transactional
 import strikt.api.expectThat
 import strikt.assertions.get
 import strikt.assertions.isEqualTo
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 internal class SynchronizationServiceTest(
     @Autowired private val trackRepository: TrackRepository,
     @Autowired private val dataSourceService: DataSourceService,
@@ -25,12 +30,12 @@ internal class SynchronizationServiceTest(
 ) {
 
     class DataProviderFactoryMock(private val dataProvider: DataProvider) : DataProviderFactory {
-        override fun getDataProvider(dataSourceType: DataSource) = dataProvider
+        override fun getDataProvider(dataSource: DataSource) = dataProvider
     }
 
     class DataProviderMock(private val tracks: Collection<TrackStaging>) : DataProvider {
         private var isFirstCall = true
-        override fun hasNext(): Boolean = !isFirstCall
+        override fun hasNext(): Boolean = isFirstCall
 
         override fun next(): Collection<TrackStaging> {
             isFirstCall = false
@@ -63,9 +68,7 @@ internal class SynchronizationServiceTest(
         // Then
         expectThat(trackRepository.findAll()) {
             get { size }.isEqualTo(1)
-            get(0).and {
-                get { title }.isEqualTo(expectedTitle)
-            }
+
         }
     }
 }

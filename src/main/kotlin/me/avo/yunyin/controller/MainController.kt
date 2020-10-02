@@ -33,7 +33,7 @@ class MainController(
     }
 
     fun stop() {
-        audioController.stop()
+
     }
 
     fun back() {
@@ -45,7 +45,7 @@ class MainController(
             val fileItem = selectedItem.get()
 
             when {
-                fileItem.isAudio -> audioController.playAudio(fileItem)
+                //fileItem.isAudio -> audioController.playAudio(fileItem)
                 fileItem.driveItem.folder != null -> loadFolder(fileItem)
             }
         }

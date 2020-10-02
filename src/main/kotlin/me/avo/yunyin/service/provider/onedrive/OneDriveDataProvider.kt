@@ -13,7 +13,7 @@ class OneDriveDataProvider(
 ) : DataProvider {
 
     private val libraryId = dataSource.libraryId
-    private val stack = Stack<IDriveItemCollectionPage>()
+    private val stack = Stack<DriveItem>()
     private var isFirstCall = true
 
     override fun hasNext(): Boolean {
@@ -34,15 +34,20 @@ class OneDriveDataProvider(
         val audio = driveItem.audio
         return TrackStaging().apply {
             itemId = driveItem.id
-            title = audio.title
-            artist = audio.artist
-            album = audio.album
+            title = audio.title ?: driveItem.name
+            artist = audio.artist ?: ""
+            album = audio.album ?: ""
         }
     }
 
     private fun getTracksFromPage(page: IDriveItemCollectionPage): List<TrackStaging> {
         return page.currentPage
-            .filter { it.audio != null }
+            .filter {
+                if (it.folder != null && it.folder.childCount > 0) {
+                    stack.add(it)
+                }
+                it.audio != null
+            }
             .map(::toTrackStaging)
     }
 
@@ -57,7 +62,8 @@ class OneDriveDataProvider(
             return null
         }
         else {
-            return TODO()
+            val folder = stack.pop()
+            return graph.getFiles(folder.id)
         }
     }
 

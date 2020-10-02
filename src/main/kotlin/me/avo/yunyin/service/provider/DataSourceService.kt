@@ -13,7 +13,7 @@ class DataSourceService(
 
     fun register(dataSourceKey: DataSourceKey): DataSource {
         return dataSourceRepository.findByIdOrNull(dataSourceKey)
-            ?: newDataSource(dataSourceKey).let(::save)
+            ?: DataSource(dataSourceKey).let(::save)
     }
 
     fun save(dataSource: DataSource): DataSource {
@@ -26,9 +26,5 @@ class DataSourceService(
         if (dataSource.id != null) {
             dataSourceRepository.delete(dataSource)
         }
-    }
-
-    private fun newDataSource(dataSourceKey: DataSourceKey) = DataSource().apply {
-        id = dataSourceKey
     }
 }
