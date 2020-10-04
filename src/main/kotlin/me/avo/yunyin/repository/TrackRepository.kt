@@ -1,5 +1,8 @@
 package me.avo.yunyin.repository
 
+import me.avo.yunyin.entity.ARTIST_TABLE_NAME
+import me.avo.yunyin.entity.TRACK_STAGING_TABLE_NAME
+import me.avo.yunyin.entity.TRACK_TABLE_NAME
 import me.avo.yunyin.entity.Track
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
@@ -12,12 +15,15 @@ interface TrackRepository : JpaRepository<Track, Long> {
     @Modifying
     @Query(
         value = """
-            insert into tracks(id, item_Id, title, artist, album) 
-            select id, item_Id, title, artist, album
-              from track_staging
+            insert into $TRACK_TABLE_NAME(id, item_id, title, artist_id, album) 
+            select null AS id, item_Id, title, a.id, album
+              from $TRACK_STAGING_TABLE_NAME t
+              join $ARTIST_TABLE_NAME a on a.name = t.artist
         """,
         nativeQuery = true
     )
     fun insertStaging()
+
+    fun findAllByArtistId(artistId: Long): List<Track>
 
 }

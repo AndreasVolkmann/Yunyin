@@ -16,7 +16,7 @@ class MainView : View("Yunyin - Cloud sound") {
     }
 
     override val root = borderpane {
-        setPrefSize(640.0, 480.0)
+        setPrefSize(800.0, 600.0)
         controller.load()
 
         center = tabpane {

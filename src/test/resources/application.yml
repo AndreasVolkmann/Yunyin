@@ -10,7 +10,7 @@ logging:
 
 spring:
   datasource:
-    url: jdbc:h2:file:./db-test;;
+    url: jdbc:h2:file:./db-test;
   jpa:
     hibernate:
       ddl-auto: create-drop

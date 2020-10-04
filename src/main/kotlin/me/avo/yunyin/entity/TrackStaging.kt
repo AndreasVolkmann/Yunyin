@@ -2,12 +2,14 @@ package me.avo.yunyin.entity
 
 import javax.persistence.*
 
+const val TRACK_STAGING_TABLE_NAME = "track_staging"
+
 @Entity
-@Table(name = "track_staging")
+@Table(name = TRACK_STAGING_TABLE_NAME)
 class TrackStaging {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
     @Column(nullable = false)

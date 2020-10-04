@@ -21,12 +21,23 @@ class SynchronizationService(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @Transactional
-    fun synchronize() {
-        loadStaging()
-        synchronizeTracks()
+    fun synchronizeAll() {
+        loadAllIntoStaging()
+        import()
     }
 
-    private fun loadStaging() {
+    @Transactional
+    fun synchronize(dataSource: DataSource) {
+        loadDataSourceIntoStaging(dataSource)
+        import()
+    }
+
+    private fun import() {
+        importArtists()
+        importTracks()
+    }
+
+    private fun loadAllIntoStaging() {
         dataSourceService
             .getAll()
             .forEach(::loadDataSourceIntoStaging)
@@ -51,7 +62,11 @@ class SynchronizationService(
         }
     }
 
-    private fun synchronizeTracks() {
+    private fun importArtists() {
+        artistRepository.importFromTrackStaging()
+    }
+
+    private fun importTracks() {
         trackRepository.insertStaging()
     }
 }

@@ -10,7 +10,6 @@ class SettingsView : View("Settings") {
     private val controller: SettingsController by di()
 
     override val root = vbox {
-
         borderpane {
             center {
                 tableview(controller.dataSources) {
@@ -35,15 +34,23 @@ class SettingsView : View("Settings") {
                             action(controller::save)
                         }
                         button("Reset").action {
+                            enableWhen(controller.model.dirty)
                             controller.model.rollback()
                         }
 
                         button("Delete") {
+                            enableWhen(controller.model.empty.not())
                             action(controller::delete)
+                        }
+
+                        button("Synchronize") {
+                            enableWhen(controller.model.empty.not())
+                            action(controller::synchronize)
                         }
                     }
                 }
-            }        }
+            }
+        }
     }
 
     init {

@@ -2,12 +2,14 @@ package me.avo.yunyin.entity
 
 import javax.persistence.*
 
+const val TRACK_TABLE_NAME = "tracks"
+
 @Entity
-@Table(name = "tracks")
+@Table(name = TRACK_TABLE_NAME)
 class Track {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
     @Column(nullable = false)
@@ -16,8 +18,8 @@ class Track {
     @Column(nullable = false)
     var title: String? = null
 
-    @Column(nullable = true)
-    var artist: String? = null
+    @Column(nullable = false)
+    var artistId: Long? = null
 
     @Column(nullable = true)
     var album: String? = null

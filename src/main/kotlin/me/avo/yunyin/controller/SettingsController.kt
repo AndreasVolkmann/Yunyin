@@ -4,6 +4,7 @@ import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import me.avo.yunyin.entity.DataSource
 import me.avo.yunyin.model.DataSourceModel
+import me.avo.yunyin.service.SynchronizationService
 import me.avo.yunyin.service.provider.DataSourceService
 import org.springframework.stereotype.Component
 import tornadofx.runAsync
@@ -12,7 +13,8 @@ import tornadofx.ui
 
 @Component
 class SettingsController(
-    private val dataSourceService: DataSourceService
+    private val dataSourceService: DataSourceService,
+    private val synchronizationService: SynchronizationService
 ) {
     val dataSources: ObservableList<DataSource> = FXCollections.observableArrayList()
     val model = DataSourceModel(DataSource())
@@ -40,5 +42,10 @@ class SettingsController(
         } success {
             load()
         }
+    }
+
+    fun synchronize() {
+        val dataSource = model.item
+        synchronizationService.synchronize(dataSource)
     }
 }

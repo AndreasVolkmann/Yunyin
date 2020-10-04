@@ -35,7 +35,7 @@ class AudioController(
                 audioPlayerService.play(track)
             }
         } ui {
-            currentInformation.value = "${track.title} - ${track.artist}"
+            currentInformation.value = "${track.title} - ${track.artistId}"
             //        hasNext.value = fileSystemController.hasNext()
             //        hasPrevious.value = fileSystemController.hasPrevious()
         }

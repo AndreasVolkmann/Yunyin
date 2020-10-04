@@ -2,14 +2,18 @@ package me.avo.yunyin.entity
 
 import javax.persistence.*
 
-@Entity
-class Artist {
+const val ARTIST_TABLE_NAME = "artists"
 
+@Entity
+@Table(
+    name = ARTIST_TABLE_NAME,
+    indexes = [Index(name = "artist_name_idx", columnList = "name", unique = true)]
+)
+class Artist(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long? = null
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
 
     @Column(nullable = false)
-    var name: String? = null
-
-}
+    var name: String
+)

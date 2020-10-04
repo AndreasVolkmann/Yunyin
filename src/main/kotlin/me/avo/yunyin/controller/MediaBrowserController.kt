@@ -1,39 +1,33 @@
 package me.avo.yunyin.controller
 
-import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import javafx.concurrent.Task
+import me.avo.yunyin.entity.Artist
 import me.avo.yunyin.entity.Track
-import me.avo.yunyin.model.FileItem
+import me.avo.yunyin.model.TrackFilterModel
 import me.avo.yunyin.repository.TrackRepository
-import me.avo.yunyin.service.SynchronizationService
 import org.springframework.stereotype.Component
+import tornadofx.onChange
 import tornadofx.runAsync
-import tornadofx.success
 import tornadofx.ui
 
 @Component
 class MediaBrowserController(
-    private val trackRepository: TrackRepository,
-    private val synchronizationService: SynchronizationService
+    private val trackRepository: TrackRepository
 ) {
     val values: ObservableList<Track> = FXCollections.observableArrayList()
 
-    fun init() {
-        runAsync {
-            //synchronizationService.synchronize()
-
-        } success {
-            refresh()
+    fun init(model: TrackFilterModel) {
+        refresh(null)
+        model.itemProperty.onChange {
+            refresh(it)
         }
     }
 
-    fun refresh() {
-        runAsync {
-            trackRepository.findAll()
-        } ui {
-            values.setAll(it)
-        }
-    }
-
+    fun refresh(artist: Artist?): Task<List<Track>> = runAsync {
+        artist?.id
+            ?.let { trackRepository.findAllByArtistId(it) }
+            ?: trackRepository.findAll()
+    } ui values::setAll
 }
