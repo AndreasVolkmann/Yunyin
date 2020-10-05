@@ -5,6 +5,9 @@ import me.avo.yunyin.controller.MainController
 import me.avo.yunyin.view.LoginView
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
+import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration
 import org.springframework.context.ConfigurableApplicationContext
 import tornadofx.App
 import tornadofx.DIContainer
@@ -12,7 +15,9 @@ import tornadofx.FX
 import kotlin.reflect.KClass
 import kotlin.system.exitProcess
 
-@SpringBootApplication
+@SpringBootApplication(
+    exclude = [GsonAutoConfiguration::class, JacksonAutoConfiguration::class, JmxAutoConfiguration::class]
+)
 class YunyinApplication : App(LoginView::class) {
 
     private lateinit var context: ConfigurableApplicationContext

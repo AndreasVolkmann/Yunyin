@@ -13,7 +13,7 @@ plugins {
 
 group = "me.avo"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_14
 
 repositories {
 	jcenter()
@@ -29,8 +29,8 @@ dependencies {
 	implementation("com.googlecode.soundlibs:jlayer:1.0.1.4")
 
 	/* OneDrive */
-	implementation("com.microsoft.azure:msal4j:1.7.0")
-	implementation("com.microsoft.graph:microsoft-graph:2.2.0")
+	implementation("com.microsoft.azure:msal4j:1.7.1")
+	implementation("com.microsoft.graph:microsoft-graph:2.3.0")
 
 	runtimeOnly("com.h2database:h2")
 
@@ -47,11 +47,11 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
+		jvmTarget = "14"
 	}
 }
 
 javafx {
-	version = "11"
+	version = "14"
 	modules = listOf("javafx.controls", "javafx.graphics", "javafx.web", "javafx.media")
 }
