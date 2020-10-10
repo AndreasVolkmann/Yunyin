@@ -1,11 +1,9 @@
 package me.avo.yunyin.view
 
 import me.avo.yunyin.controller.AudioController
-import me.avo.yunyin.controller.MainController
 import tornadofx.*
 
 class AudioPlayerControlView : View() {
-    //private val controller: MainController by di()
     private val audioController: AudioController by di()
 
     override val root = hbox {
@@ -13,14 +11,14 @@ class AudioPlayerControlView : View() {
 
         button("Previous") {
             enableWhen(audioController::hasPrevious)
-            //action(audioController::previous)
+            action(audioController::previous)
         }
         button("Play") {
-            action {  }
+            action { }
         }
         button("Next") {
             enableWhen(audioController::hasNext)
-            //action(audioController::next)
+            action(audioController::next)
         }
     }
 }

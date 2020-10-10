@@ -17,14 +17,13 @@ class TrackBrowserView : View("Tracks") {
 
         //readonlyColumn("#", Track::index).contentWidth(useAsMin = true, useAsMax = true)
         readonlyColumn("Title", Track::title).remainingWidth()
-        //readonlyColumn("Artist", Track::artist)
         readonlyColumn("Album", Track::album)
         //readonlyColumn("Length", Track::length)
         smartResize()
     }
 
     init {
-        controller.init(scope.model)
+        controller.init()
     }
 
 }

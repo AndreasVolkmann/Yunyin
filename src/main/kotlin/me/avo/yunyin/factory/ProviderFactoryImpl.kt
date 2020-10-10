@@ -1,12 +1,14 @@
-package me.avo.yunyin.service.provider
+package me.avo.yunyin.factory
 
 import me.avo.yunyin.entity.DataSource
 import me.avo.yunyin.enum.DataSourceType
-import me.avo.yunyin.service.provider.onedrive.OneDriveGraph
+import me.avo.yunyin.service.provider.AuthProvider
+import me.avo.yunyin.service.provider.DataProvider
+import me.avo.yunyin.service.provider.StreamProvider
 import me.avo.yunyin.service.provider.onedrive.OneDriveAuthProvider
 import me.avo.yunyin.service.provider.onedrive.OneDriveDataProvider
+import me.avo.yunyin.service.provider.onedrive.OneDriveGraph
 import me.avo.yunyin.service.provider.onedrive.OneDriveSteamProvider
-import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 
 @Service
@@ -38,5 +40,4 @@ class ProviderFactoryImpl(
             )
         }
     }
-
 }

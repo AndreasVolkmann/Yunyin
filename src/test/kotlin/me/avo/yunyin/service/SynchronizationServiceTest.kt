@@ -8,7 +8,7 @@ import me.avo.yunyin.repository.ArtistRepository
 import me.avo.yunyin.repository.TrackRepository
 import me.avo.yunyin.repository.TrackStagingRepository
 import me.avo.yunyin.service.provider.DataProvider
-import me.avo.yunyin.service.provider.DataProviderFactory
+import me.avo.yunyin.factory.DataProviderFactory
 import me.avo.yunyin.service.provider.DataSourceService
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test

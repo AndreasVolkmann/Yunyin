@@ -1,10 +1,9 @@
 package me.avo.yunyin.view
 
 import javafx.geometry.Side
+import javafx.scene.control.TabPane
 import me.avo.yunyin.controller.MainController
-import tornadofx.View
-import tornadofx.borderpane
-import tornadofx.tabpane
+import tornadofx.*
 
 class MainView : View("Yunyin - Cloud sound") {
 
@@ -20,10 +19,14 @@ class MainView : View("Yunyin - Cloud sound") {
         controller.load()
 
         center = tabpane {
+            tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
             side = Side.LEFT
             tab<ArtistBrowserView>()
             tab<SettingsView>()
         }
+
+
+        bottom<AudioPlayerControlView>()
     }
 }
 

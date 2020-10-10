@@ -5,7 +5,7 @@ import javax.persistence.*
 @Entity
 class UserSettings(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
     @Column(nullable = true)

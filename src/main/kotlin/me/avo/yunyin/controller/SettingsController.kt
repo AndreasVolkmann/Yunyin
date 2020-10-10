@@ -46,6 +46,8 @@ class SettingsController(
 
     fun synchronize() {
         val dataSource = model.item
-        synchronizationService.synchronize(dataSource)
+        runAsync {
+            synchronizationService.synchronize(dataSource)
+        }
     }
 }

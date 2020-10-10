@@ -14,7 +14,6 @@ import tornadofx.Controller
 @Component
 class MainController(
 //    private val fileSystemController: FileSystemController,
-    private val audioController: AudioController,
     private val userSettingsService: UserSettingsService
 ) : Controller() {
 

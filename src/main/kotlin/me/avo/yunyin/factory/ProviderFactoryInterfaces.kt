@@ -1,7 +1,10 @@
-package me.avo.yunyin.service.provider
+package me.avo.yunyin.factory
 
 import me.avo.yunyin.entity.DataSource
 import me.avo.yunyin.enum.DataSourceType
+import me.avo.yunyin.service.provider.AuthProvider
+import me.avo.yunyin.service.provider.DataProvider
+import me.avo.yunyin.service.provider.StreamProvider
 
 interface AuthProviderFactory {
     fun getAuthProvider(dataSourceType: DataSourceType): AuthProvider

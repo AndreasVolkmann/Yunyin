@@ -3,7 +3,7 @@ package me.avo.yunyin.controller
 import javafx.util.Duration
 import me.avo.yunyin.entity.DataSourceKey
 import me.avo.yunyin.enum.DataSourceType
-import me.avo.yunyin.service.provider.AuthProviderFactory
+import me.avo.yunyin.factory.AuthProviderFactory
 import me.avo.yunyin.service.provider.DataSourceService
 import me.avo.yunyin.view.LoginView
 import me.avo.yunyin.view.MainView
