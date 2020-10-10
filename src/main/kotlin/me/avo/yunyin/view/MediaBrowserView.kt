@@ -14,7 +14,5 @@ class MediaBrowserView : View("Browse") {
                 println("This!, $it")
             }
         }
-        tab<TrackBrowserView> {
-        }
     }
 }

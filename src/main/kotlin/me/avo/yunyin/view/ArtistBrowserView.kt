@@ -8,7 +8,7 @@ import tornadofx.*
 class ArtistBrowserView : View("Artists") {
 
     private val controller: ArtistBrowserController by di()
-    override val scope = super.scope as TrackFilterScope
+    override val scope = TrackFilterScope(null)
 
     override fun onDock() {
         controller.refresh()
@@ -17,17 +17,19 @@ class ArtistBrowserView : View("Artists") {
     override val root = borderpane {
         left {
             tableview(controller.values) {
-                //bindSelected(audioController.selectedTrack)
-                //onDoubleClick(audioController::play)
-                //readonlyColumn("#", Track::index).contentWidth(useAsMin = true, useAsMax = true)
-                readonlyColumn("Name", Artist::name).remainingWidth()
-                smartResize()
-                onUserSelect(2) {
+
+                onSelectionChange {
                     scope.model.item = it
                 }
+
+                readonlyColumn("Artist", Artist::name).remainingWidth()
+                smartResize()
+
+                //                onUserSelect(2) {
+                //                    scope.model.item = it
+                //                }
             }
         }
-
-        right<TrackBrowserView>()
+        center<TrackBrowserView>()
     }
 }

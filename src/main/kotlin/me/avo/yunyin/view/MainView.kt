@@ -21,7 +21,7 @@ class MainView : View("Yunyin - Cloud sound") {
 
         center = tabpane {
             side = Side.LEFT
-            tab<MediaBrowserView>()
+            tab<ArtistBrowserView>()
             tab<SettingsView>()
         }
     }
