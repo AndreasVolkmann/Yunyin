@@ -3,8 +3,8 @@ package me.avo.yunyin.component
 import javazoom.jl.player.advanced.AdvancedPlayer
 import javazoom.jl.player.advanced.PlaybackEvent
 import javazoom.jl.player.advanced.PlaybackListener
-import me.avo.yunyin.entity.Playlist
-import me.avo.yunyin.entity.Track
+import me.avo.yunyin.domain.Track
+import me.avo.yunyin.entity.TrackEntity
 import me.avo.yunyin.enum.DataSourceType
 import me.avo.yunyin.factory.StreamProviderFactory
 import org.springframework.stereotype.Component
@@ -17,14 +17,10 @@ class AudioPlayer(
 ) {
     private var player: AdvancedPlayer? = null
     private var pausedOnFrame = -1
-    private var track = Track()
-    private var playlist = Playlist()
 
-    fun play(track: Track, playlist: Playlist) {
-        this.track = track
-        this.playlist = playlist
+    fun play(track: Track) {
         streamProviderFactory
-            .getStreamProvider(DataSourceType.OneDrive) // TODO generic
+            .getStreamProvider(track.dataSourceType) // TODO generic
             .getStream(track)
             .use(::play)
     }

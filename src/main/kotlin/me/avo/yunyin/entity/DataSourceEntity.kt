@@ -8,7 +8,7 @@ import javax.persistence.EmbeddedId
 import javax.persistence.Entity
 
 @Entity
-class DataSource(
+class DataSourceEntity(
     @EmbeddedId
     val id: DataSourceKey? = null,
 

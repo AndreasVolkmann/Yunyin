@@ -1,16 +1,14 @@
 package me.avo.yunyin.service
 
-import me.avo.yunyin.entity.DataSource
+import me.avo.yunyin.domain.DataSource
 import me.avo.yunyin.entity.DataSourceKey
 import me.avo.yunyin.entity.TrackStaging
 import me.avo.yunyin.enum.DataSourceType
+import me.avo.yunyin.factory.DataProviderFactory
 import me.avo.yunyin.repository.ArtistRepository
 import me.avo.yunyin.repository.TrackRepository
 import me.avo.yunyin.repository.TrackStagingRepository
 import me.avo.yunyin.service.provider.DataProvider
-import me.avo.yunyin.factory.DataProviderFactory
-import me.avo.yunyin.service.provider.DataSourceService
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,7 +26,6 @@ import strikt.assertions.isNotNull
 @Transactional
 internal class SynchronizationServiceTest(
     @Autowired private val trackRepository: TrackRepository,
-    @Autowired private val dataSourceService: DataSourceService,
     @Autowired private val artistRepository: ArtistRepository,
     @Autowired private val trackStagingRepository: TrackStagingRepository
 ) {
@@ -47,16 +44,9 @@ internal class SynchronizationServiceTest(
         }
     }
 
-    private val deaultArtistName = "artist"
+    private val defaultArtistName = "artist"
     private val dataSourceKey = DataSourceKey("1", DataSourceType.OneDrive)
-    private lateinit var dataSource: DataSource
-
-    @BeforeAll fun beforeAll() {
-        dataSource = dataSourceService
-            .register(dataSourceKey)
-            .apply { libraryId = "1" }
-            .let(dataSourceService::save)
-    }
+    private val dataSource: DataSource = DataSource(dataSourceKey, "1")
 
     @Test fun `synchronize creates artist and track`() {
         // Given
@@ -87,7 +77,7 @@ internal class SynchronizationServiceTest(
 
     @Test fun `track should have artist id`() {
         // Given
-        val tracks = listOf(makeTrackStaging("id", "a", deaultArtistName))
+        val tracks = listOf(makeTrackStaging("id", "a", defaultArtistName))
 
         // When
         getSynchronizationService(tracks).synchronize(dataSource)
@@ -99,32 +89,19 @@ internal class SynchronizationServiceTest(
         }
         val artist = artistRepository.findByIdOrNull(track.artistId!!)!!
         expectThat(artist) {
-            get { name }.isEqualTo(deaultArtistName)
-        }
-    }
-
-    @Test fun test() {
-        // Given
-        val tracks = listOf(makeTrackStaging("id"))
-
-        // When
-        getSynchronizationService(tracks).synchronizeAll()
-
-        // Then
-        expectThat(trackRepository.findAll()) {
-            get { size }.isEqualTo(1)
+            get { name }.isEqualTo(defaultArtistName)
         }
     }
 
     private fun getSynchronizationService(tracks: Collection<TrackStaging>) = SynchronizationService(
         DataProviderFactoryMock(DataProviderMock(tracks)),
-        dataSourceService, trackRepository, artistRepository, trackStagingRepository
+        trackRepository, artistRepository, trackStagingRepository
     )
 
     private fun makeTrackStaging(
         itemId: String,
         title: String = "test",
-        artist: String = deaultArtistName,
+        artist: String = defaultArtistName,
         album: String = "album",
     ) = TrackStaging().apply {
         this.title = title

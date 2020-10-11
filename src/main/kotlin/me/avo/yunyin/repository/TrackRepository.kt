@@ -3,14 +3,14 @@ package me.avo.yunyin.repository
 import me.avo.yunyin.entity.ARTIST_TABLE_NAME
 import me.avo.yunyin.entity.TRACK_STAGING_TABLE_NAME
 import me.avo.yunyin.entity.TRACK_TABLE_NAME
-import me.avo.yunyin.entity.Track
+import me.avo.yunyin.entity.TrackEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface TrackRepository : JpaRepository<Track, Long> {
+interface TrackRepository : JpaRepository<TrackEntity, Long> {
 
     @Modifying
     @Query(
@@ -24,6 +24,6 @@ interface TrackRepository : JpaRepository<Track, Long> {
     )
     fun insertStaging()
 
-    fun findAllByArtistId(artistId: Long): List<Track>
+    fun findAllByArtistId(artistId: Long): List<TrackEntity>
 
 }

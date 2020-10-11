@@ -14,6 +14,7 @@ plugins {
 group = "me.avo"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_14
+val javaVersion = java.sourceCompatibility.majorVersion
 
 repositories {
 	jcenter()
@@ -30,7 +31,7 @@ dependencies {
 
 	/* OneDrive */
 	implementation("com.microsoft.azure:msal4j:1.7.1")
-	implementation("com.microsoft.graph:microsoft-graph:2.3.0")
+	implementation("com.microsoft.graph:microsoft-graph:2.3.1")
 
 	runtimeOnly("com.h2database:h2")
 
@@ -38,6 +39,7 @@ dependencies {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
 	testImplementation("io.strikt:strikt-spring:0.28.0")
+	testImplementation("com.tngtech.archunit:archunit:0.14.1")
 }
 
 tasks.withType<Test> {
@@ -47,11 +49,11 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "14"
+		jvmTarget = javaVersion
 	}
 }
 
 javafx {
-	version = "14"
+	version = javaVersion
 	modules = listOf("javafx.controls", "javafx.graphics", "javafx.web", "javafx.media")
 }

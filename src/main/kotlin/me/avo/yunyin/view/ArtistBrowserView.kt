@@ -1,15 +1,12 @@
 package me.avo.yunyin.view
 
 import me.avo.yunyin.controller.ArtistBrowserController
-import me.avo.yunyin.entity.Artist
-import me.avo.yunyin.entity.Playlist
-import me.avo.yunyin.view.scope.TrackFilterScope
+import me.avo.yunyin.domain.Artist
 import tornadofx.*
 
 class ArtistBrowserView : View("Artists") {
 
     private val controller: ArtistBrowserController by di()
-    override val scope = TrackFilterScope(null, Playlist(), Playlist())
 
     override fun onDock() {
         // TODO load previous session values
@@ -19,15 +16,13 @@ class ArtistBrowserView : View("Artists") {
     override val root = borderpane {
         left {
             tableview(controller.values) {
-
-                onSelectionChange {
-                    scope.model.item = it
-                }
+                onSelectionChange(controller::onSelect)
 
                 readonlyColumn("Artist", Artist::name).remainingWidth()
                 smartResize()
             }
         }
+
         center<TrackBrowserView>()
 
         right<PlaylistView>()

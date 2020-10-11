@@ -3,7 +3,8 @@ package me.avo.yunyin.entity
 import javax.persistence.*
 
 @Entity
-class Playlist {
+@Table(name = "playlists")
+class PlaylistEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +17,6 @@ class Playlist {
         cascade = [CascadeType.ALL],
         orphanRemoval = true
     )
-    var tracks: List<Track> = listOf()
+    var tracks: MutableList<TrackEntity> = mutableListOf()
 
 }

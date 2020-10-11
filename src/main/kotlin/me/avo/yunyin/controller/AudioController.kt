@@ -6,10 +6,11 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.concurrent.Task
 import javazoom.jl.player.advanced.PlaybackEvent
 import javazoom.jl.player.advanced.PlaybackListener
-import me.avo.yunyin.entity.Artist
-import me.avo.yunyin.entity.Track
+import me.avo.yunyin.domain.Artist
+import me.avo.yunyin.domain.Track
 import me.avo.yunyin.factory.AudioPlayerFactory
 import me.avo.yunyin.service.ArtistService
+import me.avo.yunyin.service.PlayQueueService
 import me.avo.yunyin.view.scope.TrackFilterScope
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -18,6 +19,7 @@ import tornadofx.Controller
 @Component
 class AudioController(
     private val artistService: ArtistService,
+    private val playQueueService: PlayQueueService,
     audioPlayerFactory: AudioPlayerFactory
 ) : Controller() {
 
@@ -33,51 +35,55 @@ class AudioController(
             handlePlaybackFinished(evt)
         }
     }
-    private val audioPlayer = audioPlayerFactory.makeAudioPlayer(playbackListener)
-    private val playlist get() = scope.livePlaylist.item
     private val logger = LoggerFactory.getLogger(this::class.java)
+    private val audioPlayer = audioPlayerFactory.makeAudioPlayer(playbackListener)
+    private var tracks: List<Track> = listOf()
+    private var currentIndex: Int = -1
 
     fun play() {
         if (selectedTrack.isNotNull.value) {
-            scope.livePlaylist.item = scope.selectionPlaylist.item
-            playAudio(selectedTrack.get())
+            val playQueue = scope.playQueue.item
+            tracks = playQueueService.getTracks(playQueue)
+            val track = selectedTrack.get()
+            playAudio(track)
         }
     }
 
     fun next() {
-        if (hasNext(selectedTrack.value)) {
-            val nextIndex = playlist.tracks.indexOf(selectedTrack.value) + 1
-            val nextTrack = playlist.tracks[nextIndex]
+        if (hasNext()) {
+            val nextIndex = currentIndex + 1
+            val nextTrack = tracks[nextIndex]
             playAudio(nextTrack)
         }
     }
 
     fun previous() {
-        if (hasPrevious(selectedTrack.value)) {
-            val nextIndex = playlist.tracks.indexOf(selectedTrack.value) - 1
-            val nextTrack = playlist.tracks[nextIndex]
+        if (hasPrevious()) {
+            val nextIndex = currentIndex - 1
+            val nextTrack = tracks[nextIndex]
             playAudio(nextTrack)
         }
     }
 
     private fun playAudio(track: Track): Task<Artist?> {
         logger.info("playAudio - Start: $track")
+        currentIndex = track.index
         return runAsync {
             runAsync {
-                audioPlayer.play(track, playlist)
+                audioPlayer.play(track)
             }
-            track.artistId?.let(artistService::findArtistById)
+            artistService.findArtistById(track.artistId)
         } ui { artist ->
             val artistName = artist?.name ?: ""
             currentInformation.value = "${track.title} - $artistName"
-            hasNext.value = hasNext(track)
-            hasPrevious.value = hasPrevious(track)
+            hasNext.value = hasNext()
+            hasPrevious.value = hasPrevious()
         }
     }
 
-    private fun hasNext(track: Track): Boolean = playlist.tracks.indexOf(track) < playlist.tracks.size - 1
+    private fun hasNext(): Boolean = currentIndex < tracks.size - 1
 
-    private fun hasPrevious(track: Track): Boolean = playlist.tracks.indexOf(track) > 0
+    private fun hasPrevious(): Boolean = currentIndex > 0
 
     private fun handlePlaybackFinished(evt: PlaybackEvent) {
         println("playbackFinished ${evt.frame}")

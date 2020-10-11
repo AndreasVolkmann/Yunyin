@@ -1,12 +1,12 @@
 package me.avo.yunyin.model
 
-import me.avo.yunyin.entity.Artist
+import me.avo.yunyin.entity.ArtistEntity
 import tornadofx.ItemViewModel
 
 class TrackFilterModel(
-    artist: Artist?
-) : ItemViewModel<Artist>(artist) {
+    artist: ArtistEntity?
+) : ItemViewModel<ArtistEntity>(artist) {
 
-    val artistId = bind(Artist::id)
-    val name = bind(Artist::name)
+    val artistId = bind(ArtistEntity::id)
+    val name = bind(ArtistEntity::name)
 }

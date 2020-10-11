@@ -3,10 +3,12 @@ package me.avo.yunyin.view
 import javafx.geometry.Side
 import javafx.scene.control.TabPane
 import me.avo.yunyin.controller.MainController
+import me.avo.yunyin.view.scope.TrackFilterScope
 import tornadofx.*
 
 class MainView : View("Yunyin - Cloud sound") {
 
+    override val scope = TrackFilterScope(null)
     private val controller: MainController by di()
 
     override fun onUndock() {

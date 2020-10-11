@@ -2,14 +2,13 @@ package me.avo.yunyin.view
 
 import me.avo.yunyin.controller.AudioController
 import me.avo.yunyin.controller.MediaBrowserController
-import me.avo.yunyin.entity.Track
-import me.avo.yunyin.view.scope.TrackFilterScope
+import me.avo.yunyin.domain.Track
+import me.avo.yunyin.extension.trackContextMenu
 import tornadofx.*
 
 class TrackBrowserView : View("Tracks") {
     private val controller: MediaBrowserController by di()
     private val audioController: AudioController by di()
-    override val scope = super.scope as TrackFilterScope
 
     override val root = tableview(controller.values) {
         bindSelected(audioController.selectedTrack)
@@ -20,6 +19,8 @@ class TrackBrowserView : View("Tracks") {
         readonlyColumn("Album", Track::album)
         //readonlyColumn("Length", Track::length)
         smartResize()
+
+        trackContextMenu(audioController)
     }
 
     init {

@@ -2,7 +2,7 @@ package me.avo.yunyin.controller
 
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import me.avo.yunyin.entity.DataSource
+import me.avo.yunyin.domain.DataSource
 import me.avo.yunyin.model.DataSourceModel
 import me.avo.yunyin.service.SynchronizationService
 import me.avo.yunyin.service.provider.DataSourceService
@@ -17,30 +17,32 @@ class SettingsController(
     private val synchronizationService: SynchronizationService
 ) {
     val dataSources: ObservableList<DataSource> = FXCollections.observableArrayList()
-    val model = DataSourceModel(DataSource())
+    val model = DataSourceModel(null)
 
     fun load() {
         runAsync {
             dataSourceService.getAll()
-        } ui {
-            dataSources.setAll(it)
-        }
+        } ui dataSources::setAll
     }
 
     fun save() {
-        model.commit()
-        runAsync {
-            dataSourceService.save(model.item)
-        } success {
-            load()
+        model.item?.let {
+            model.commit()
+            runAsync {
+                dataSourceService.save(it)
+            } success {
+                load()
+            }
         }
     }
 
     fun delete() {
-        runAsync {
-            dataSourceService.delete(model.item)
-        } success {
-            load()
+        model.item?.let {
+            runAsync {
+                dataSourceService.delete(it.id)
+            } success {
+                load()
+            }
         }
     }
 

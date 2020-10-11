@@ -1,6 +1,6 @@
 package me.avo.yunyin.factory
 
-import me.avo.yunyin.entity.DataSource
+import me.avo.yunyin.domain.DataSource
 import me.avo.yunyin.enum.DataSourceType
 import me.avo.yunyin.service.provider.AuthProvider
 import me.avo.yunyin.service.provider.DataProvider
@@ -23,9 +23,7 @@ class ProviderFactoryImpl(
     }
 
     override fun getDataProvider(dataSource: DataSource): DataProvider {
-        val id = dataSource.id ?: throw IllegalArgumentException("DataSource id has to be set")
-
-        return when (id.dataSourceType) {
+        return when (dataSource.id.dataSourceType) {
             DataSourceType.OneDrive -> OneDriveDataProvider(
                 OneDriveGraph(oneDriveAuthProvider),
                 dataSource

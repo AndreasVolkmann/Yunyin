@@ -1,6 +1,6 @@
 package me.avo.yunyin.factory
 
-import me.avo.yunyin.entity.DataSource
+import me.avo.yunyin.domain.DataSource
 import me.avo.yunyin.enum.DataSourceType
 import me.avo.yunyin.service.provider.AuthProvider
 import me.avo.yunyin.service.provider.DataProvider

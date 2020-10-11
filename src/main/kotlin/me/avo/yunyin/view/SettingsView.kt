@@ -1,8 +1,7 @@
 package me.avo.yunyin.view
 
 import me.avo.yunyin.controller.SettingsController
-import me.avo.yunyin.entity.DataSource
-import me.avo.yunyin.model.DataSourceModel
+import me.avo.yunyin.domain.DataSource
 import tornadofx.*
 
 class SettingsView : View("Settings") {
@@ -16,8 +15,8 @@ class SettingsView : View("Settings") {
                     readonlyColumn("Id", DataSource::id)
                     readonlyColumn("Library Id", DataSource::libraryId)
 
-                    controller.model.rebindOnChange(this) { selected ->
-                        item = selected ?: DataSource()
+                    controller.model.rebindOnChange(this) {
+                        item = it
                     }
                 }
             }

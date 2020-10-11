@@ -6,7 +6,7 @@ const val TRACK_TABLE_NAME = "tracks"
 
 @Entity
 @Table(name = TRACK_TABLE_NAME)
-class Track {
+class TrackEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

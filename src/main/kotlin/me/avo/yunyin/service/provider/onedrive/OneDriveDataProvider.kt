@@ -2,14 +2,14 @@ package me.avo.yunyin.service.provider.onedrive
 
 import com.microsoft.graph.models.extensions.DriveItem
 import com.microsoft.graph.requests.extensions.IDriveItemCollectionPage
-import me.avo.yunyin.entity.DataSource
+import me.avo.yunyin.domain.DataSource
 import me.avo.yunyin.entity.TrackStaging
 import me.avo.yunyin.service.provider.DataProvider
 import java.util.*
 
 class OneDriveDataProvider(
     private val graph: OneDriveGraph,
-    private val dataSource: DataSource
+    dataSource: DataSource
 ) : DataProvider {
 
     private val libraryId = dataSource.libraryId
