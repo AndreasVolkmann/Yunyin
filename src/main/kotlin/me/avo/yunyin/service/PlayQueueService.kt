@@ -43,7 +43,7 @@ class PlayQueueService(
         }.mapIndexed { index, entity -> entity.toTrack(index) }
 
     private fun TrackEntity.toTrack(index: Int) = Track(
-        id!!, itemId!!, title!!, artistId!!, album!!,
+        id!!, itemId, title, artistId, album,
         DataSourceType.OneDrive, // TODO
         index
     )

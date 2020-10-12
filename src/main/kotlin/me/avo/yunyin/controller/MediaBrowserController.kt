@@ -6,16 +6,18 @@ import me.avo.yunyin.domain.PlayQueue
 import me.avo.yunyin.domain.Track
 import me.avo.yunyin.service.PlayQueueService
 import me.avo.yunyin.view.scope.TrackFilterScope
+import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Component
 import tornadofx.Controller
 import tornadofx.onChange
 
 @Component
+@Lazy
 class MediaBrowserController(
     private val playQueueService: PlayQueueService
 ) : Controller() {
 
-    override val scope = super.scope as TrackFilterScope
+    override val scope get() = super.scope as TrackFilterScope
     val values: ObservableList<Track> = FXCollections.observableArrayList()
 
     fun init() {

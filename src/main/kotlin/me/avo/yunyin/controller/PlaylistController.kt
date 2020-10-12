@@ -7,16 +7,18 @@ import me.avo.yunyin.domain.Track
 import me.avo.yunyin.service.PlayQueueService
 import me.avo.yunyin.service.PlaylistService
 import me.avo.yunyin.view.scope.TrackFilterScope
+import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Component
 import tornadofx.Controller
 import tornadofx.success
 
 @Component
+@Lazy
 class PlaylistController(
     private val playlistService: PlaylistService,
     private val playQueueService: PlayQueueService
 ) : Controller() {
-    override val scope = super.scope as TrackFilterScope
+    override val scope get() = super.scope as TrackFilterScope
     val playlists: ObservableList<Playlist> = FXCollections.observableArrayList()
 
     fun refresh() {

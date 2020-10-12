@@ -15,5 +15,3 @@ spring:
     hibernate:
       ddl-auto: update
 #      ddl-auto: create-drop
-  main:
-    lazy-initialization: true

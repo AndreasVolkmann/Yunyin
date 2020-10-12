@@ -19,7 +19,6 @@ import strikt.api.expectThat
 import strikt.assertions.hasSize
 import strikt.assertions.isEqualTo
 import strikt.assertions.isNotEmpty
-import strikt.assertions.isNotNull
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -84,10 +83,7 @@ internal class SynchronizationServiceTest(
 
         // Then
         val track = trackRepository.findAll().single()
-        expectThat(track) {
-            get { artistId }.isNotNull()
-        }
-        val artist = artistRepository.findByIdOrNull(track.artistId!!)!!
+        val artist = artistRepository.findByIdOrNull(track.artistId)!!
         expectThat(artist) {
             get { name }.isEqualTo(defaultArtistName)
         }

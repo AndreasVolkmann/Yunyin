@@ -4,13 +4,9 @@ import javazoom.jl.player.advanced.AdvancedPlayer
 import javazoom.jl.player.advanced.PlaybackEvent
 import javazoom.jl.player.advanced.PlaybackListener
 import me.avo.yunyin.domain.Track
-import me.avo.yunyin.entity.TrackEntity
-import me.avo.yunyin.enum.DataSourceType
 import me.avo.yunyin.factory.StreamProviderFactory
-import org.springframework.stereotype.Component
 import java.io.InputStream
 
-@Component
 class AudioPlayer(
     private val streamProviderFactory: StreamProviderFactory,
     private val playbackListener: PlaybackListener

@@ -6,21 +6,20 @@ const val TRACK_TABLE_NAME = "tracks"
 
 @Entity
 @Table(name = TRACK_TABLE_NAME)
-class TrackEntity {
-
+class TrackEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    var id: Long? = null,
 
     @Column(nullable = false)
-    var itemId: String? = null
+    var itemId: String,
 
     @Column(nullable = false)
-    var title: String? = null
+    var title: String,
 
     @Column(nullable = false)
-    var artistId: Long? = null
+    var artistId: Long,
 
     @Column(nullable = true)
     var album: String? = null
-}
+)

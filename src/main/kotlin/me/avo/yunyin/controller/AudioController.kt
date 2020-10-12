@@ -13,17 +13,19 @@ import me.avo.yunyin.service.ArtistService
 import me.avo.yunyin.service.PlayQueueService
 import me.avo.yunyin.view.scope.TrackFilterScope
 import org.slf4j.LoggerFactory
+import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Component
 import tornadofx.Controller
 
 @Component
+@Lazy
 class AudioController(
     private val artistService: ArtistService,
     private val playQueueService: PlayQueueService,
     audioPlayerFactory: AudioPlayerFactory
 ) : Controller() {
 
-    override val scope = super.scope as TrackFilterScope
+    override val scope get() = super.scope as TrackFilterScope
     val selectedTrack = SimpleObjectProperty<Track>()
     val currentInformation = SimpleStringProperty("-")
     val hasNext = SimpleBooleanProperty(false)
