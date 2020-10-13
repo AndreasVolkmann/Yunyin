@@ -21,13 +21,10 @@ class AudioPlayer(
             .use(::play)
     }
 
-    private fun play(inputStream: InputStream) {
-        stop()
-
-        AdvancedPlayer(inputStream).let {
-            player = it
-            it.playBackListener = playbackListener
-            it.play()
+    fun resume() {
+        player?.let {
+            // TODO this does not work yet
+            it.play(pausedOnFrame, Int.MAX_VALUE)
         }
     }
 
@@ -45,5 +42,15 @@ class AudioPlayer(
     fun handlePlaybackFinished(evt: PlaybackEvent) {
         println("playbackFinished ${evt.frame}")
         pausedOnFrame = evt.frame
+    }
+
+    private fun play(inputStream: InputStream) {
+        stop()
+
+        AdvancedPlayer(inputStream).let {
+            player = it
+            it.playBackListener = playbackListener
+            it.play()
+        }
     }
 }

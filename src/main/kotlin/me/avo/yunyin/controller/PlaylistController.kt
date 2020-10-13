@@ -2,6 +2,7 @@ package me.avo.yunyin.controller
 
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import me.avo.yunyin.domain.PlayQueue
 import me.avo.yunyin.domain.Playlist
 import me.avo.yunyin.domain.Track
 import me.avo.yunyin.service.PlayQueueService
@@ -43,6 +44,16 @@ class PlaylistController(
     fun addTrackToPlaylist(track: Track, playlist: Playlist) {
         runAsync {
             playlistService.addTrackToPlaylist(track, playlist)
+        }
+    }
+
+    fun removeTrackFromCurrentPlaylist(track: Track) {
+        val playQueue = scope.playQueue.item
+        if (playQueue is PlayQueue.PlaylistPlayQueue) {
+            val playlist = playQueue.playlist
+            runAsync {
+                playlistService.removeTrackFromPlaylist(track, playlist)
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
 import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.retry.annotation.EnableRetry
 import tornadofx.App
 import tornadofx.DIContainer
 import tornadofx.FX
@@ -18,6 +19,7 @@ import kotlin.system.exitProcess
 @SpringBootApplication(
     exclude = [GsonAutoConfiguration::class, JacksonAutoConfiguration::class, JmxAutoConfiguration::class]
 )
+@EnableRetry
 class YunyinApplication : App(LoginView::class) {
 
     private lateinit var context: ConfigurableApplicationContext

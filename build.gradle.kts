@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	val kotlinVersion = "1.4.10"
-	id("org.springframework.boot") version "2.4.0-M2"
+	id("org.springframework.boot") version "2.4.0-M3"
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	id("org.openjfx.javafxplugin") version "0.0.9"
 	id("com.github.ben-manes.versions") version "0.33.0"
@@ -24,6 +24,7 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.retry:spring-retry")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("no.tornado:tornadofx:1.7.20")
@@ -50,6 +51,7 @@ tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = javaVersion
+		useIR = false // waiting for https://youtrack.jetbrains.com/issue/KT-41265
 	}
 }
 

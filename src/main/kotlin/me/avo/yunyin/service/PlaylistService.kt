@@ -32,6 +32,11 @@ class PlaylistService(
     }
 
     @Transactional
+    fun removeTrackFromPlaylist(track: Track, playlist: Playlist) {
+        playlistRepository.removeTrackFromPlaylist(track.id, playlist.id)
+    }
+
+    @Transactional
     fun getTracks(playQueue: PlayQueue.PlaylistPlayQueue): List<TrackEntity> {
         val entity = playlistRepository.findByIdOrNull(playQueue.playlist.id)
         return entity

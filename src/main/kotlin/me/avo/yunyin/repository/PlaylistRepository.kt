@@ -22,4 +22,15 @@ interface PlaylistRepository : JpaRepository<PlaylistEntity, Long> {
     )
     fun addTrackToPlaylist(trackId: Long, playlistId: Long)
 
+    @Modifying
+    @Query(
+        nativeQuery = true,
+        value = """
+            DELETE FROM $PLAYLIST_TRACK_TABLE_NAME
+             WHERE $PLAYLIST_TRACK_TID_NAME = ?1
+               and $PLAYLIST_TRACK_PID_NAME = ?2
+        """
+    )
+    fun removeTrackFromPlaylist(trackId: Long, playlistId: Long)
+
 }

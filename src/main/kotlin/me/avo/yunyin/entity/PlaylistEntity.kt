@@ -25,5 +25,5 @@ class PlaylistEntity(
         joinColumns = [JoinColumn(name = PLAYLIST_TRACK_PID_NAME)],
         inverseJoinColumns = [JoinColumn(name = PLAYLIST_TRACK_TID_NAME)]
     )
-    var tracks: MutableList<TrackEntity> = mutableListOf()
+    var tracks: List<TrackEntity> = emptyList()
 )
